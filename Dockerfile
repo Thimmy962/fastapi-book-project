@@ -1,5 +1,5 @@
-# Use Python 3.11 image
-FROM python:3.11-slim
+# Use a lightweight Python image
+FROM python:3.11-alpine
 
 WORKDIR /app
 
@@ -7,8 +7,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Copy the FastAPI application
+# Copy app files
 COPY . .
 
-# Start FastAPI with Gunicorn + Uvicorn
+# Start FastAPI using Gunicorn + Uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
