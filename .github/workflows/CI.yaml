@@ -19,6 +19,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
       - name: Install dependencies
         run: pip install -r requirements.txt
   
@@ -31,9 +34,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Railway CLI
-        run: curl -fsSL https://railway.app/install.sh | sh
+        run: |
+          curl -fsSL https://railway.app/install.sh | sh
+          echo "$HOME/.railway/bin" >> $GITHUB_PATH  # Ensure railway is in PATH
+
+      - name: Authenticate Railway
+        run: railway auth --token ${{ secrets.RAILWAY_TOKEN }}
 
       - name: Deploy to Railway
         run: railway up --service FASTAPI
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
