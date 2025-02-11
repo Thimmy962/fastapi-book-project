@@ -38,8 +38,7 @@ jobs:
           curl -fsSL https://railway.app/install.sh | sh
           echo "$HOME/.railway/bin" >> $GITHUB_PATH  # Ensure railway is in PATH
 
-      - name: Authenticate Railway
-        run: railway auth --token ${{ secrets.RAILWAY_TOKEN }}
-
       - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: railway up --service FASTAPI
