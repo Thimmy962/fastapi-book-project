@@ -23,7 +23,7 @@ jobs:
         run: pip install -r requirements.txt
   
   deploy:
-    need: test
+    needs: test
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     steps:
