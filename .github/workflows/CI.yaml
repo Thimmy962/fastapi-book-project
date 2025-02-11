@@ -30,8 +30,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Install Railway CLI
+        run: curl -fsSL https://railway.app/install.sh | sh
+
       - name: Deploy to Railway
-        uses: railwayapp/railway-action@1.2.0
-        with:
-          service: FASTAPI
-          token: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service fastapi
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
